@@ -1,12 +1,23 @@
-# React + Vite
+# FactoresX - Evaluación de Riesgo Psicosocial
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación web interactiva permite aplicar cuestionarios sobre factores de riesgo psicosocial (según la NOM-035) a los trabajadores de una organización utilizando la API de Google Forms. La aplicación recoge respuestas, calcula los resultados y proporciona un análisis inicial sobre el riesgo psicosocial y los posibles acontecimientos traumáticos severos.
 
-Currently, two official plugins are available:
+## Configuración
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Configura la API de Google Forms en tu proyecto de Google Cloud.
+2. Obtén las credenciales necesarias y configúralas en tu aplicación.
 
-## Expanding the ESLint configuration
+## Scripts Disponibles
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `dev`: Inicia la aplicación en modo de desarrollo.
+- `build`: Construye la aplicación para producción.
+- `lint`: Ejecuta ESLint para encontrar y arreglar problemas.
+- `preview`: Previsualiza la aplicación construida.
+
+## Dependencias
+
+- `react`
+- `react-dom`
+- `tailwindcss`
+- `@tailwindcss/vite`
+- `@vitejs/plugin-react-swc`

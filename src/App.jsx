@@ -2,7 +2,7 @@ import './App.css'
 import Header from './components/Header'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
-import GoogleForm from './components/GoogleForm'
+import Cuestionario from './pages/Cuestionario'
 import Footer from './components/Footer'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cuestionario" element={<GoogleForm />} />
+        <Route path="/cuestionario" element={<Cuestionario />} />
       </Routes>
       <Footer />
     </Router>

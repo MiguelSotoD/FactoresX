@@ -1,5 +1,5 @@
 import Form from "../components/Form";
-function Cuestionario() {
+function CuestionarioPages() {
   
   return (
     <>
@@ -8,4 +8,4 @@ function Cuestionario() {
   );
 }
 
-export default Cuestionario;
+export default CuestionarioPages;

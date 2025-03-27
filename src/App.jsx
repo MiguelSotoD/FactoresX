@@ -2,8 +2,9 @@ import './App.css'
 import Header from './components/Header'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
-import Cuestionario from './pages/Cuestionario'
+import CuestionarioPages from './pages/Cuestionario'
 import Footer from './components/Footer'
+import ResultadoPages from './pages/Resultado'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cuestionario" element={<Cuestionario />} />
+        <Route path="/cuestionario" element={<CuestionarioPages />} />
+        <Route path="/Resultado" element={<ResultadoPages />} />
       </Routes>
       <Footer />
     </Router>

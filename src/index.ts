@@ -8,6 +8,10 @@ import cookieParser from "cookie-parser";
 import logger from "./utils/logger";
 import swaggerDocs  from "./utils/swagger";
 import { testConnectionPostgreSQL } from "./config/configDB"; //Archivo de configuracion de la base de datos de PostgreSQL
+
+// ARCHIVOS DE RUTAS
+import userRoutes from "./routes/userRoutes";
+
 // servidor de express
 const app = express();
 
@@ -24,6 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Rutas
+app.use("/user", userRoutes);
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });

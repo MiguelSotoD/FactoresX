@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Home() {
     return (
+        <>
+        <Header />
         <div className="home container mx-auto p-4 bg-gray-100">
             <header className="text-center my-8">
                 <h1 className="text-5xl font-extrabold text-blue-400">Bienvenido a FactoresX</h1>
@@ -44,6 +48,9 @@ function Home() {
                 </div>
             </section>
         </div>
+        <Footer />
+        </>
+        
     );
 }
 

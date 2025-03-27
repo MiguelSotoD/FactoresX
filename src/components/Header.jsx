@@ -23,7 +23,7 @@ function Header() {
                             <Link to="/cuestionario" className="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Cuestionario</Link>
                         </li>
                     </ul>
-                    <a href="#" class="text-white bg-blue-400 hover:bg-blue-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2  focus:outline-none shadow-md shadow-gray-400">Login</a>
+                    <a href="/Login" class="text-white bg-blue-400 hover:bg-blue-500  rounded-lg text-sm px-4 py-2 md:px-5 md:py-2  focus:outline-none shadow-md shadow-gray-400">Login</a>
                 </div>
             </div>
         </nav>

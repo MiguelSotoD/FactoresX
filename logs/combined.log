@@ -1,0 +1,3 @@
+{"level":"info","message":"Conexión a PostgreSQL exitosa","timestamp":"2025-03-26 22:01:12"}
+{"level":"info","message":"Servidor listo en el puerto: 4000","timestamp":"2025-03-26 22:01:12"}
+{"level":"info","message":"Documentacion de Apis con Swagger en http://localhost:4000/api-docs","timestamp":"2025-03-26 22:01:12"}

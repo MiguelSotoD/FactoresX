@@ -6,6 +6,63 @@ import { guardarRespuestas } from "../controller/cuestionarioController";
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/respuestas/nuevasRespuestas:
+ *   post:
+ *     summary: Guardar respuestas de usuario
+ *     description: Registra las respuestas dadas por un usuario a preguntas específicas
+ *     tags:
+ *       - Respuestas
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - usuario_id
+ *               - respuestas
+ *             properties:
+ *               usuario_id:
+ *                 type: integer
+ *                 example: 5
+ *               respuestas:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - pregunta_id
+ *                     - respuesta
+ *                   properties:
+ *                     pregunta_id:
+ *                       type: integer
+ *                       example: 12
+ *                     respuesta:
+ *                       type: string
+ *                       example: Me siento bien con mi carga laboral
+ *     responses:
+ *       201:
+ *         description: Respuestas guardadas correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Respuestas guardadas correctamente
+ *                 respuestas:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Respuesta'
+ *       400:
+ *         description: Error de validación
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error interno del servidor
+ */
 
 router.post(
     "/nuevasRespuestas",

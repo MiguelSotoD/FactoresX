@@ -5,6 +5,64 @@
  
  const router = Router();
   
+/**
+ * @swagger
+ * /api/preguntas/nuevasPreguntas:
+ *   post:
+ *     summary: Agregar preguntas a un cuestionario
+ *     description: Crea múltiples preguntas asociadas a un cuestionario existente
+ *     tags:
+ *       - Preguntas
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - cuestionario_id
+ *               - preguntas
+ *             properties:
+ *               cuestionario_id:
+ *                 type: integer
+ *                 example: 4
+ *               preguntas:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - texto
+ *                     - tipo
+ *                   properties:
+ *                     texto:
+ *                       type: string
+ *                       example: ¿Cómo te sientes actualmente con tu carga laboral?
+ *                     tipo:
+ *                       type: string
+ *                       enum: [opcion, abierta]
+ *                       example: abierta
+ *     responses:
+ *       201:
+ *         description: Preguntas agregadas correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Preguntas agregadas correctamente
+ *                 preguntas:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Pregunta'
+ *       400:
+ *         description: Error de validación
+ *       404:
+ *         description: Cuestionario no encontrado
+ *       500:
+ *         description: Error interno del servidor
+ */
   router.post(
     "/nuevasPreguntas",
     celebrate({

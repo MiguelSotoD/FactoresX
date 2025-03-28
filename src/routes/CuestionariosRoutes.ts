@@ -31,7 +31,7 @@ const router = Router();
 
 /**
  * @swagger
- * /cuestionario/nuevoCuestionario:
+ * /api/cuestionario/nuevoCuestionario:
  *   post:
  *     summary: Crear un nuevo cuestionario
  *     description: Crear un nuevo cuestionario para la aplicacion

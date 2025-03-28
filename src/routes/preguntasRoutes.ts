@@ -7,7 +7,7 @@
   
 /**
  * @swagger
- * /api/preguntas/nuevasPreguntas:
+ * /preguntas/nuevasPreguntas:
  *   post:
  *     summary: Agregar preguntas a un cuestionario
  *     description: Crea múltiples preguntas asociadas a un cuestionario existente

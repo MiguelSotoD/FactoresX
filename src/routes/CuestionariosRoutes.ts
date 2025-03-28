@@ -1,7 +1,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import { cuestionarioValidator, preguntasValidator, respuestasValidator } from "../validator/cuestionarioValidator";
-import { nuevoCuestionario, guardarRespuestas } from "../controller/cuestionarioController";
+import { nuevoCuestionario } from "../controller/cuestionarioController";
 
 const router = Router();
 
@@ -31,7 +31,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/cuestionario/nuevoCuestionario:
+ * /cuestionario/nuevoCuestionario:
  *   post:
  *     summary: Crear un nuevo cuestionario
  *     description: Crear un nuevo cuestionario para la aplicacion

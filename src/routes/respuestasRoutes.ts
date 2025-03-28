@@ -2,13 +2,13 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import {  respuestasValidator } from "../validator/cuestionarioValidator";
-import { guardarRespuestas } from "../controller/cuestionarioController";
+import { guardarRespuestas } from "../controller/respuestasController";
 
 const router = Router();
 
 /**
  * @swagger
- * /api/respuestas/nuevasRespuestas:
+ * /respuestas/nuevasRespuestas:
  *   post:
  *     summary: Guardar respuestas de usuario
  *     description: Registra las respuestas dadas por un usuario a preguntas específicas

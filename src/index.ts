@@ -11,7 +11,7 @@ import { testConnectionPostgreSQL } from "./config/configDB"; //Archivo de confi
 
 // ARCHIVOS DE RUTAS
 import userRoutes from "./routes/userRoutes";
-
+import cuestionarioRoutes from './routes/CuestionariosRoutes'
 // servidor de express
 const app = express();
 
@@ -28,7 +28,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Rutas
-app.use("/user", userRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/cuestionario", cuestionarioRoutes);
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });

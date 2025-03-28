@@ -12,6 +12,8 @@ import { testConnectionPostgreSQL } from "./config/configDB"; //Archivo de confi
 // ARCHIVOS DE RUTAS
 import userRoutes from "./routes/userRoutes";
 import cuestionarioRoutes from './routes/CuestionariosRoutes'
+import respuestasRoutes from './routes/respuestasRoutes'
+import preguntasRoutes from './routes/preguntasRoutes'
 // servidor de express
 const app = express();
 
@@ -30,15 +32,17 @@ app.use(cookieParser());
 // Rutas
 app.use("/api/user", userRoutes);
 app.use("/api/cuestionario", cuestionarioRoutes);
+app.use("/api/preguntas", preguntasRoutes);
+app.use("/api/respuestas", respuestasRoutes);
+
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });
 
 app.use(errors());
-swaggerDocs(app);
 // Middleware para manejar errores
 app.use(errorHandler);
-
+swaggerDocs(app);
 // Funcion para inicar el servidor en el puerto establecido
 const startServerExpress = async () => {
     await testConnectionPostgreSQL(); 

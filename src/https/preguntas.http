@@ -1,0 +1,21 @@
+### Crear preguntas para un cuestionario
+POST http://localhost:4000/api/preguntas/nuevasPreguntas
+Content-Type: application/json
+
+{
+  "cuestionario_id": 5,
+  "preguntas": [
+    {
+      "texto": "¿Cómo te sientes actualmente con tu carga laboral?",
+      "tipo": "abierta"
+    },
+    {
+      "texto": "¿Has experimentado estrés en los últimos 7 días?",
+      "tipo": "opcion"
+    },
+    {
+      "texto": "Selecciona los síntomas que has presentado",
+      "tipo": "opcion"
+    }
+  ]
+}

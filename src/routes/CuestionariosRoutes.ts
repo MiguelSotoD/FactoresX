@@ -1,7 +1,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
-import { cuestionarioValidator } from "../validator/cuestionarioValidator";
-import { nuevoCuestionario } from "../controller/cuestionarioController";
+import { cuestionarioValidator, preguntasValidator, respuestasValidator } from "../validator/cuestionarioValidator";
+import { nuevoCuestionario, guardarRespuestas } from "../controller/cuestionarioController";
 
 const router = Router();
 

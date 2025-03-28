@@ -22,4 +22,5 @@ const crearCuestionario = async (dataCuestionario: ICuestionarioInput) => {
   }
 }
 
-export {crearCuestionario}
+
+export {crearCuestionario,};

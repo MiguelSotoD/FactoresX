@@ -37,4 +37,14 @@ export const userValidation = {
         'string.min': '"Puesto" debe tener al menos 3 caracteres',
         'string.max': '"Puesto" no puede exceder los 250 caracteres',
     },
+    rol: {
+        'string.base': '"rol" debe ser una cadena de Texto',
+        'string.min': '"rol" debe tener al menos 3 caracteres',
+        'string.max': '"rol" no puede exceder los 250 caracteres',
+    },
+    status: {
+        'string.base': '"status" debe ser una cadena de Texto',
+        'string.min': '"status" debe tener al menos 3 caracteres',
+        'string.max': '"status" no puede exceder los 250 caracteres',
+    },
   };

@@ -1,6 +1,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import { userValidation } from "../validator/userValidator";
+import { newUser, signUser } from "../controller/userController";
 
 const router = Router();
 
@@ -74,6 +75,7 @@ router.post(
         password: Joi.string().required().messages(userValidation.password),
       }),
     }),
+    signUser
   );
 
 
@@ -155,8 +157,10 @@ router.post(
         password: Joi.string().required().messages(userValidation.password),
         departamento: Joi.string().min(3).max(250).required().messages(userValidation.departamento),
         puesto: Joi.string().min(3).max(250).required().messages(userValidation.puesto),
+        rol: Joi.string().min(3).max(250).required().messages(userValidation.rol),
       }),
     }),
+    newUser
   );
 
 

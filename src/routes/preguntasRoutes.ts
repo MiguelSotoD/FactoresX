@@ -5,6 +5,42 @@
  
  const router = Router();
   
+
+ /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Pregunta:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         cuestionario_id:
+ *           type: integer
+ *         texto:
+ *           type: string
+ *         tipo:
+ *           type: string
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *     Respuesta:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         usuario_id:
+ *           type: integer
+ *         pregunta_id:
+ *           type: integer
+ *         respuesta:
+ *           type: string
+ *         fecha_respuesta:
+ *           type: string
+ *           format: date-time
+ */
+
+
 /**
  * @swagger
  * /preguntas/nuevasPreguntas:

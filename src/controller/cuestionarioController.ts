@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import logger from "../utils/logger";
-import { crearCuestionario } from "../services/cuestionarioServices";
+import { crearCuestionario, obtenerCuestionariosConPreguntas } from "../services/cuestionarioServices";
 // Crear un nuevo cuestionario
 export const nuevoCuestionario = async (req: Request, res: Response) : Promise<void> => {
     // Validar errores de entrada
@@ -28,7 +28,20 @@ export const nuevoCuestionario = async (req: Request, res: Response) : Promise<v
 
 }
 
-
+export const cuestionarioConPreguntas = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const cuestionarios = await obtenerCuestionariosConPreguntas();
+  
+      res.status(200).json({
+        message: "Cuestionarios obtenidos correctamente",
+        data: cuestionarios,
+      });
+    } catch (error) {
+      logger.error("Error en controlador al listar cuestionarios:", error);
+      res.status(500).json({ message: "Error al obtener los cuestionarios" });
+    }
+  };
+  
 
 
 

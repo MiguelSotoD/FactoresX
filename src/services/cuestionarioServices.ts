@@ -2,7 +2,7 @@ import { conexionDBPostgreSQL } from "../config/configDB";
 import logger from "../utils/logger";
 import { ICuestionarioInput } from "../models/interface/cuestionarioInterface";
 
-const crearCuestionario = async (dataCuestionario: ICuestionarioInput) => {
+export const crearCuestionario = async (dataCuestionario: ICuestionarioInput) => {
   const {nombre, descripcion} = dataCuestionario;
   try{
     const result = await conexionDBPostgreSQL.query(
@@ -22,5 +22,33 @@ const crearCuestionario = async (dataCuestionario: ICuestionarioInput) => {
   }
 }
 
+export const obtenerCuestionariosConPreguntas = async () => {
+  try {
+    const result = await conexionDBPostgreSQL.query(`
+      SELECT
+        c.id AS cuestionario_id,
+        c.nombre AS cuestionario_nombre,
+        c.descripcion,
+        c.created_at,
+        c.updated_at,
+        json_agg(
+          json_build_object(
+            'id', p.id,
+            'texto', p.texto,
+            'tipo', p.tipo,
+            'created_at', p.created_at
+          )
+        ) AS preguntas
+      FROM cuestionarios c
+      LEFT JOIN preguntas p ON p.cuestionario_id = c.id AND p.deleted_at IS NULL
+      WHERE c.deleted_at IS NULL
+      GROUP BY c.id
+      ORDER BY c.id;
+    `);
 
-export {crearCuestionario,};
+    return result.rows;
+  } catch (error) {
+    logger.error("Error al obtener cuestionarios con preguntas:", error);
+    throw new Error("No se pudo obtener la información");
+  }
+};

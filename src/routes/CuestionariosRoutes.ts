@@ -1,7 +1,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
-import { cuestionarioValidator, preguntasValidator, respuestasValidator } from "../validator/cuestionarioValidator";
-import { nuevoCuestionario } from "../controller/cuestionarioController";
+import { cuestionarioValidator } from "../validator/cuestionarioValidator";
+import { nuevoCuestionario, cuestionarioConPreguntas } from "../controller/cuestionarioController";
 
 const router = Router();
 
@@ -77,6 +77,55 @@ router.post(
     }),
     nuevoCuestionario
   );
+
+  /**
+ * @swagger
+ * /cuestionario/con-preguntas:
+ *   get:
+ *     summary: Obtener todos los cuestionarios con sus preguntas
+ *     description: Retorna una lista de cuestionarios junto con sus preguntas relacionadas, sin incluir respuestas.
+ *     tags:
+ *       - Cuestionarios
+ *     responses:
+ *       200:
+ *         description: Cuestionarios obtenidos correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Cuestionarios obtenidos correctamente
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       cuestionario_id:
+ *                         type: integer
+ *                         example: 1
+ *                       cuestionario_nombre:
+ *                         type: string
+ *                         example: Evaluación de Estrés
+ *                       descripcion:
+ *                         type: string
+ *                         example: Cuestionario para evaluar niveles de estrés
+ *                       created_at:
+ *                         type: string
+ *                         format: date-time
+ *                       updated_at:
+ *                         type: string
+ *                         format: date-time
+ *                       preguntas:
+ *                         type: array
+ *                         items:
+ *                           $ref: '#/components/schemas/Pregunta'
+ *       500:
+ *         description: Error interno del servidor
+ */
+
+router.get("/con-preguntas", cuestionarioConPreguntas);
 
 
 export default router;

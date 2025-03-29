@@ -52,3 +52,34 @@ export const obtenerCuestionariosConPreguntas = async () => {
     throw new Error("No se pudo obtener la información");
   }
 };
+
+export const obtenerByIDCuestionarioConPreguntas = async (id: number) => {
+  try {
+    const result = await conexionDBPostgreSQL.query(`
+      SELECT
+        c.id AS cuestionario_id,
+        c.nombre AS cuestionario_nombre,
+        c.descripcion,
+        c.created_at,
+        c.updated_at,
+        json_agg(
+          json_build_object(
+            'id', p.id,
+            'texto', p.texto,
+            'tipo', p.tipo,
+            'created_at', p.created_at
+          )
+        ) AS preguntas
+      FROM cuestionarios c
+      LEFT JOIN preguntas p ON p.cuestionario_id = c.id AND p.deleted_at IS NULL
+      WHERE c.deleted_at IS NULL AND c.id = $1
+      GROUP BY c.id
+      ORDER BY c.id
+    `, [id]);
+
+    return result.rows[0]; 
+  } catch (error) {
+    logger.error("Error al obtener cuestionarios con preguntas:", error);
+    throw new Error("No se pudo obtener la información");
+  }
+};

@@ -2,7 +2,7 @@ import { conexionDBPostgreSQL } from "../config/configDB";
 import { User } from "../models/userModel";
 import logger from "../utils/logger";
 
-const crearUser = async (userData: User): Promise<void> => {
+const crearUserService = async (userData: User): Promise<void> => {
   const {
     nombre,
     apellido_paterno,
@@ -38,7 +38,7 @@ const crearUser = async (userData: User): Promise<void> => {
   }
 };
 
-const ingresarUser = async (
+const ingresarUserService = async (
   email: string,
   password: string
 ): Promise<User | null> => {
@@ -65,4 +65,16 @@ const ingresarUser = async (
   }
 };
 
-export { crearUser, ingresarUser };
+const showUserServices = async () => {
+  try {
+    const result = await conexionDBPostgreSQL.query(`SELECT * FROM usuarios`);
+    
+    logger.info(`Usuarios Obtenidos: ${result.rows[0].nombre}`);
+    return result.rows;
+  } catch (error) {
+    logger.error(`Error en el : ${error.message}`)
+    throw new Error("Error al obtener los usuarios")
+  }
+};
+
+export { crearUserService, ingresarUserService, showUserServices };

@@ -2,7 +2,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import {  respuestasValidator } from "../validator/cuestionarioValidator";
-import { guardarRespuestas } from "../controller/respuestasController";
+import { guardarRespuestas, verRespuestaUsuarios } from "../controller/respuestasController";
 
 const router = Router();
 
@@ -87,6 +87,57 @@ router.post(
     }),
     guardarRespuestas
   );
-  
+
+
+  /**
+   * @swagger
+   * /respuestas/obtenerRespuestas:
+   *   get:
+   *     summary: Obtener respuestas de usuario
+   *     description: Recupera las respuestas dadas por un usuario a preguntas específicas
+   *     tags:
+   *       - Respuestas
+   *     parameters:
+   *       - in: query
+   *         name: usuario_id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *         description: ID del usuario cuyas respuestas se desean obtener
+   *     responses:
+   *       200:
+   *         description: Respuestas obtenidas correctamente
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 usuario_id:
+   *                   type: integer
+   *                   example: 5
+   *                 respuestas:
+   *                   type: array
+   *                   items:
+   *                     $ref: '#/components/schemas/Respuesta'
+   *       400:
+   *         description: Error de validación
+   *       404:
+   *         description: Respuestas no encontradas
+   *       500:
+   *         description: Error interno del servidor
+   */
+
+  router.get(
+    "/obtenerRespuestas",
+    celebrate({
+      [Segments.BODY]: Joi.object({
+        usuario_id: Joi.number().required().messages({
+          "any.required": "El campo usuario_id es obligatorio",
+          "number.base": "El usuario_id debe ser un número",
+        }),
+      }),
+    }),
+    verRespuestaUsuarios
+  );
 
 export default router;

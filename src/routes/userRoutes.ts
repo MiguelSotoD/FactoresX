@@ -1,7 +1,8 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import { userValidation } from "../validator/userValidator";
-import { newUser, signUser } from "../controller/userController";
+import { newUserController, signUserController, logoutUserController, showUserController } from "../controller/userController";
+import { verificarToken } from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -75,7 +76,7 @@ router.post(
         password: Joi.string().required().messages(userValidation.password),
       }),
     }),
-    signUser
+    signUserController
   );
 
 
@@ -160,7 +161,7 @@ router.post(
         rol: Joi.string().min(3).max(250).required().messages(userValidation.rol),
       }),
     }),
-    newUser
+    newUserController
   );
 
 
@@ -198,7 +199,7 @@ router.post(
   *       503:
   *         description: Servidor no disponible
   */
-router.post("/logout",);
+router.post("/logout", logoutUserController);
 
 /**
  * @swagger
@@ -214,7 +215,7 @@ router.post("/logout",);
  *       400:
  *        description: Error de Servidor
  */
-router.get("/usuarios", );
+router.get("/usuarios",verificarToken, showUserController);
 
 
 /**

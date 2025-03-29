@@ -32,3 +32,25 @@ export const insertarRespuestas = async (
     client.release();
   }
 };
+
+export const obtenerUsuariosRespuesta = async () => {
+  try {
+    const result = await conexionDBPostgreSQL.query(
+      `SELECT u.id, u.nombre, 
+              CASE 
+                WHEN EXISTS (
+                  SELECT 1 
+                  FROM respuestas r 
+                  WHERE r.usuario_id = u.id
+                ) THEN 'Completado'
+                ELSE 'No Completado'
+              END AS estado_cuestionario
+       FROM usuarios u`
+    );
+
+    return result.rows;
+  } catch (error) {
+    logger.error("Error al obtener el estado del cuestionario de los usuarios:", error);
+    throw new Error("Error al obtener el estado del cuestionario de los usuarios");
+  }
+};

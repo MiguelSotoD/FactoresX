@@ -11,6 +11,16 @@ const secciones = [
         ]
     },
     {
+        titulo: "Instrucciones para responder",
+        instrucciones: `Las respuestas van del 1 al 5, donde:
+        
+        5 = Siempre / Muy de acuerdo / Muy positivo
+        4 = Casi siempre / De acuerdo / Positivo
+        3 = Algunas veces / Neutral
+        2 = Casi nunca / En desacuerdo / Negativo
+        1 = Nunca / Muy en desacuerdo / Muy negativo`
+    },
+    {
         titulo: "I. Condiciones en el Ambiente de Trabajo",
         preguntas: [
             { id: 1, texto: "En mi trabajo, las condiciones de iluminación, ruido, temperatura y ventilación son adecuadas.", tipo: "escala" },

@@ -15,7 +15,7 @@ export default function CuestionarioNom035() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
+        <div className="max-w-2xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
             <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
                 CUESTIONARIO PARA IDENTIFICAR FACTORES DE RIESGO PSICOSOCIAL EN EL TRABAJO
             </h2>

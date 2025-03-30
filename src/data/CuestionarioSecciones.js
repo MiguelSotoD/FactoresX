@@ -6,8 +6,6 @@ const secciones = [
             { id: "puesto", texto: "Puesto:", tipo: "texto" },
             { id: "departamento", texto: "Departamento/Área:", tipo: "texto" },
             { id: "fecha", texto: "Fecha:", tipo: "fecha" },
-            { id: "antiguedad", texto: "Antigüedad en el puesto:", tipo: "texto" },
-            { id: "sexo", texto: "Sexo:", tipo: "opciones", opciones: ["Masculino", "Femenino", "Prefiero no decirlo"] }
         ]
     },
     {

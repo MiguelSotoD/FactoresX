@@ -41,7 +41,7 @@ export const analizarResultadosPorTrabajador = async (trabajador_id: number): Pr
     for (const factor in puntajesPorFactor) {
       const puntajes = puntajesPorFactor[factor];
       const promedio = puntajes.reduce((a, b) => a + b, 0) / puntajes.length;
-      const riesgo = promedio <= 2 ? "bajo" : promedio <= 3.5 ? "medio" : "alto";
+      const riesgo = promedio <= 2 ? "alto" : promedio <= 3.5 ? "medio" : "bajo";
 
       resultadosPorFactor[factor] = {
         promedio: parseFloat(promedio.toFixed(2)),
@@ -53,7 +53,7 @@ export const analizarResultadosPorTrabajador = async (trabajador_id: number): Pr
 
     // Riesgo global
     const promedioGlobal = todosPuntajes.reduce((a, b) => a + b, 0) / todosPuntajes.length;
-    const riesgoGlobal = promedioGlobal <= 2 ? "bajo" : promedioGlobal <= 3.5 ? "medio" : "alto";
+    const riesgoGlobal = promedioGlobal <= 2 ? "alto" : promedioGlobal <= 3.5 ? "medio" : "bajo";
 
     // Recomendación general
     const recomendaciones =

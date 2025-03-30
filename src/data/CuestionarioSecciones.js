@@ -4,6 +4,7 @@ const secciones = [
         preguntas: [
             { id: "nombre", texto: "Nombre del empleado (opcional):", tipo: "texto" },
             { id: "puesto", texto: "Puesto:", tipo: "texto" },
+            { id: "organizacion", texto: "Organización:", tipo: "texto" },
             { id: "departamento", texto: "Departamento/Área:", tipo: "texto" },
             { id: "fecha", texto: "Fecha:", tipo: "fecha" },
         ]

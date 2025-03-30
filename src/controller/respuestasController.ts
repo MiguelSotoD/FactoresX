@@ -4,7 +4,12 @@ import { validationResult } from "express-validator";
 import logger from "../utils/logger";
 import { insertarRespuestas } from "../services/respuestaServices";
 import { obtenerUsuariosRespuesta } from "../services/respuestaServices";
+import { validarPreguntaNoRespondida } from "../services/validators/existenciaValidator";
+import { analizarResultadosPorTrabajador } from "../services/resultadosServices";
+
 export const guardarRespuestas = async (req: Request, res: Response): Promise<void> => {
+
+  // Validar errores de entrada
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
       res.status(400).json({
@@ -17,15 +22,27 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
     try {
       const { trabajador_id, respuestas } = req.body;
       const trabajador_idNumber = parseInt(trabajador_id, 10);
-      const respuestasGuardadas = await insertarRespuestas(trabajador_idNumber, respuestas);
-  
+      // Validar que el trabajador no haya respondido la pregunta antes
+      for (const r of respuestas) {
+        await validarPreguntaNoRespondida(trabajador_idNumber, r.pregunta_id);
+      }
+      const respuestasGuardadas = await insertarRespuestas(trabajador_idNumber, respuestas); //Guardar las respuestas del trabajador
+
+      await analizarResultadosPorTrabajador(trabajador_idNumber); //Generar analisis de las respuestas
+
+      const urlPDF = `${req.protocol}://${req.get("host")}/resultado/${trabajador_idNumber}/pdf`;
+
       res.status(201).json({
         message: "Respuestas guardadas correctamente",
+        pdf_resultado: urlPDF,
         respuestas: respuestasGuardadas,
+
       });
     } catch (error) {
       logger.error("Error en el controlador al guardar respuestas:", error);
-      res.status(500).json({ message: "Error al guardar respuestas" });
+      const mensaje = error.message || "Error al guardar respuestas";
+      const status = mensaje.includes("ya has respondido") ? 409 : 500;
+      res.status(status).json({ message: mensaje });
     }
   };
 
@@ -59,13 +76,13 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
         });
       }
   
-      const usuariosConEstado = Array.from(agrupado.values()).map((usuario: any) => ({
-        trabajador_id: usuario.trabajador_id,
-        nombre: usuario.nombre,
-        puesto: usuario.puesto,
-        departamento: usuario.departamento,
-        respondido: usuario.cuestionarios.length > 0,
-        respuestas: usuario.cuestionarios,
+      const usuariosConEstado = Array.from(agrupado.values()).map((trabajador: any) => ({
+        trabajador_id: trabajador.trabajador_id,
+        nombre: trabajador.nombre,
+        puesto: trabajador.puesto,
+        departamento: trabajador.departamento,
+        respondido: trabajador.cuestionarios.length > 0,
+        respuestas: trabajador.cuestionarios,
       }));
   
       res.status(200).json({

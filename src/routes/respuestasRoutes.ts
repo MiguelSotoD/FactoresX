@@ -26,7 +26,7 @@ const router = Router();
  *             properties:
  *               trabajador_id:
  *                 type: integer
- *                 example: 5
+ *                 example: 1
  *               respuestas:
  *                 type: array
  *                 items:
@@ -93,17 +93,10 @@ router.post(
    * @swagger
    * /respuestas/obtenerRespuestas:
    *   get:
-   *     summary: Obtener respuestas de usuario
-   *     description: Recupera las respuestas dadas por un usuario a preguntas específicas
+   *     summary: Obtener respuestas de usuarios y validar si contesto
+   *     description: Recupera todas las respuestas dadas por los trabajadores
    *     tags:
    *       - Respuestas
-   *     parameters:
-   *       - in: query
-   *         name: trabajador_id
-   *         required: true
-   *         schema:
-   *           type: integer
-   *         description: ID del usuario cuyas respuestas se desean obtener
    *     responses:
    *       200:
    *         description: Respuestas obtenidas correctamente

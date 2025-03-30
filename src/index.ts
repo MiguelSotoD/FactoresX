@@ -15,6 +15,7 @@ import cuestionarioRoutes from './routes/CuestionariosRoutes'
 import respuestasRoutes from './routes/respuestasRoutes'
 import preguntasRoutes from './routes/preguntasRoutes'
 import trabajadorRoutes from './routes/trabajadorRoutes'
+import resultadosRoutes from './routes/resultadosRoutes'
 // servidor de express
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/cuestionario", cuestionarioRoutes);
 app.use("/api/preguntas", preguntasRoutes);
 app.use("/api/respuestas", respuestasRoutes);
 app.use("/api/trabajador", trabajadorRoutes);
+app.use("/api", resultadosRoutes);
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });

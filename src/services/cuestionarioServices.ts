@@ -34,8 +34,8 @@ export const obtenerCuestionariosConPreguntas = async () => {
         json_agg(
           json_build_object(
             'id', p.id,
-            'texto', p.texto,
-            'tipo', p.tipo,
+            'texto', p.pregunta,
+            'tipo', p.tipo_respuesta,
             'created_at', p.created_at
           )
         ) AS preguntas
@@ -65,8 +65,8 @@ export const obtenerByIDCuestionarioConPreguntas = async (id: number) => {
         json_agg(
           json_build_object(
             'id', p.id,
-            'texto', p.texto,
-            'tipo', p.tipo,
+            'texto', p.pregunta,
+            'tipo', p.tipo_respuesta,
             'created_at', p.created_at
           )
         ) AS preguntas

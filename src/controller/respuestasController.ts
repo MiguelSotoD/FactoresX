@@ -15,8 +15,9 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
     }
   
     try {
-      const { usuario_id, respuestas } = req.body;
-      const respuestasGuardadas = await insertarRespuestas(usuario_id, respuestas);
+      const { trabajador_id, respuestas } = req.body;
+      const trabajador_idNumber = parseInt(trabajador_id, 10);
+      const respuestasGuardadas = await insertarRespuestas(trabajador_idNumber, respuestas);
   
       res.status(201).json({
         message: "Respuestas guardadas correctamente",
@@ -28,23 +29,53 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
     }
   };
 
-export const verRespuestaUsuarios = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const usuariosRespuesta = await obtenerUsuariosRespuesta();
-    
-    const usuariosConEstado = usuariosRespuesta.map((usuario: any) => ({
-      usuario_id: usuario.usuario_id,
-      nombre: usuario.nombre,
-      cuestionario: usuario.cuestionario,
-      respondido: usuario.cuestionario && usuario.cuestionario.length > 0 ? true : false,
-    }));
-
-    res.status(200).json({
-      message: "Usuarios y estado de cuestionarios obtenidos correctamente",
-      data: usuariosConEstado,
-    });
-  } catch (error) {
-    logger.error("Error en el controlador al obtener respuestas de usuarios:", error);
-    res.status(500).json({ message: "Error al obtener respuestas de usuarios" });
-  }
-};
+  
+  export const verRespuestaUsuarios = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const filas = await obtenerUsuariosRespuesta();
+  
+      // Agrupar respuestas por trabajador
+      const agrupado = new Map();
+  
+      for (const fila of filas) {
+        const id = fila.trabajador_id;
+        if (!agrupado.has(id)) {
+          agrupado.set(id, {
+            trabajador_id: id,
+            nombre: fila.trabajador_nombre,
+            puesto: fila.puesto,
+            departamento: fila.departamento,
+            cuestionarios: [],
+          });
+        }
+  
+        agrupado.get(id).cuestionarios.push({
+          cuestionario_id: fila.cuestionario_id,
+          nombre_cuestionario: fila.nombre_cuestionario,
+          pregunta_id: fila.pregunta_id,
+          texto_pregunta: fila.texto_pregunta,
+          respuesta: fila.respuesta,
+          fecha_respuesta: fila.fecha_respuesta,
+        });
+      }
+  
+      const usuariosConEstado = Array.from(agrupado.values()).map((usuario: any) => ({
+        trabajador_id: usuario.trabajador_id,
+        nombre: usuario.nombre,
+        puesto: usuario.puesto,
+        departamento: usuario.departamento,
+        respondido: usuario.cuestionarios.length > 0,
+        respuestas: usuario.cuestionarios,
+      }));
+  
+      res.status(200).json({
+        message: "Trabajadores y respuestas obtenidas correctamente",
+        data: usuariosConEstado,
+      });
+  
+    } catch (error) {
+      logger.error("Error en el controlador al obtener respuestas de Trabajador:", error);
+      res.status(500).json({ message: "Error al obtener respuestas de Trabajador" });
+    }
+  };
+  

@@ -24,7 +24,7 @@ const router = Router();
  *               - usuario_id
  *               - respuestas
  *             properties:
- *               usuario_id:
+ *               trabajador_id:
  *                 type: integer
  *                 example: 5
  *               respuestas:
@@ -40,7 +40,7 @@ const router = Router();
  *                       example: 12
  *                     respuesta:
  *                       type: string
- *                       example: Me siento bien con mi carga laboral
+ *                       example: "2"
  *     responses:
  *       201:
  *         description: Respuestas guardadas correctamente
@@ -68,7 +68,7 @@ router.post(
     "/nuevasRespuestas",
     celebrate({
       [Segments.BODY]: Joi.object({
-        usuario_id: Joi.number().required().messages(respuestasValidator.usuario_id),
+        trabajador_id: Joi.number().required().messages(respuestasValidator.usuario_id),
         respuestas: Joi.array()
           .items(
             Joi.object({
@@ -99,7 +99,7 @@ router.post(
    *       - Respuestas
    *     parameters:
    *       - in: query
-   *         name: usuario_id
+   *         name: trabajador_id
    *         required: true
    *         schema:
    *           type: integer

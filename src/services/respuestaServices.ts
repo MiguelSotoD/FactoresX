@@ -2,7 +2,7 @@ import { conexionDBPostgreSQL } from "../config/configDB";
 import logger from "../utils/logger";
 
 export const insertarRespuestas = async (
-  usuario_id: number,
+  trabajador_id: number,
   respuestas: { pregunta_id: number; respuesta: string }[]
 ) => {
   const client = await conexionDBPostgreSQL.connect();
@@ -13,16 +13,16 @@ export const insertarRespuestas = async (
 
     for (const r of respuestas) {
       const result = await client.query(
-        `INSERT INTO respuestas (usuario_id, pregunta_id, respuesta, fecha_respuesta)
-         VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+        `INSERT INTO respuestas (trabajador_id, pregunta_id, respuesta)
+         VALUES ($1, $2, $3)
          RETURNING *`,
-        [usuario_id, r.pregunta_id, r.respuesta]
+        [trabajador_id, r.pregunta_id, r.respuesta]
       );
       inserts.push(result.rows[0]);
     }
 
     await client.query("COMMIT");
-    logger.info(`Se guardaron ${inserts.length} respuestas del usuario ${usuario_id}`);
+    logger.info(`Se guardaron ${inserts.length} respuestas del usuario ${trabajador_id}`);
     return inserts;
   } catch (error) {
     await client.query("ROLLBACK");
@@ -35,22 +35,32 @@ export const insertarRespuestas = async (
 
 export const obtenerUsuariosRespuesta = async () => {
   try {
-    const result = await conexionDBPostgreSQL.query(
-      `SELECT u.id, u.nombre, 
-              CASE 
-                WHEN EXISTS (
-                  SELECT 1 
-                  FROM respuestas r 
-                  WHERE r.usuario_id = u.id
-                ) THEN 'Completado'
-                ELSE 'No Completado'
-              END AS estado_cuestionario
-       FROM usuarios u`
-    );
+    const result = await conexionDBPostgreSQL.query(`
+      SELECT 
+        t.id AS trabajador_id,
+        t.nombre AS trabajador_nombre,
+        t.puesto,
+        t.departamento,
+        c.id AS cuestionario_id,
+        c.nombre AS nombre_cuestionario,
+        p.id AS pregunta_id,
+        p.pregunta AS texto_pregunta,
+        r.respuesta,
+        r.created_at AS fecha_respuesta
+      FROM respuestas r
+      INNER JOIN trabajadores t ON r.trabajador_id = t.id
+      INNER JOIN preguntas p ON r.pregunta_id = p.id
+      INNER JOIN cuestionarios c ON p.cuestionario_id = c.id
+      WHERE r.deleted_at IS NULL
+        AND p.deleted_at IS NULL
+        AND c.deleted_at IS NULL
+        AND t.deleted_at IS NULL
+      ORDER BY t.id, c.id, p.id;
+    `);
 
     return result.rows;
   } catch (error) {
-    logger.error("Error al obtener el estado del cuestionario de los usuarios:", error);
-    throw new Error("Error al obtener el estado del cuestionario de los usuarios");
+    logger.error("Error al obtener respuestas completas de los trabajadores:", error);
+    throw new Error("Error al obtener respuestas de los trabajadores");
   }
 };

@@ -3,7 +3,7 @@ import logger from "../utils/logger";
 import { validarExistenciaCuestionario } from "./validators/existenciaValidator";
 export const insertarPreguntas = async (
   cuestionario_id: number,
-  preguntas: { texto: string; tipo: string }[]
+  preguntas: { pregunta: string; tipo_respuesta: string }[]
 ) => {
   const client = await conexionDBPostgreSQL.connect();
   const inserts = [];
@@ -15,10 +15,10 @@ export const insertarPreguntas = async (
 
     for (const pregunta of preguntas) {
       const result = await client.query(
-        `INSERT INTO preguntas (cuestionario_id, texto, tipo)
+        `INSERT INTO preguntas (cuestionario_id, pregunta, tipo_respuesta)
          VALUES ($1, $2, $3)
          RETURNING *`,
-        [cuestionario_id, pregunta.texto, pregunta.tipo]
+        [cuestionario_id, pregunta.pregunta, pregunta.tipo_respuesta]
       );
       inserts.push(result.rows[0]);
     }

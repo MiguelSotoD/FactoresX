@@ -17,9 +17,9 @@
  *           type: integer
  *         cuestionario_id:
  *           type: integer
- *         texto:
+ *         pregunta:
  *           type: string
- *         tipo:
+ *         tipo_respuesta:
  *           type: string
  *         created_at:
  *           type: string
@@ -67,16 +67,16 @@
  *                 items:
  *                   type: object
  *                   required:
- *                     - texto
- *                     - tipo
+ *                     - pregunta
+ *                     - tipo_respuesta
  *                   properties:
- *                     texto:
+ *                     pregunta:
  *                       type: string
  *                       example: ¿Cómo te sientes actualmente con tu carga laboral?
- *                     tipo:
+ *                     tipo_respuesta:
  *                       type: string
- *                       enum: [opcion, abierta]
- *                       example: abierta
+ *                       enum: [opcion]
+ *                       example: opcion
  *     responses:
  *       201:
  *         description: Preguntas agregadas correctamente
@@ -110,8 +110,8 @@
         preguntas: Joi.array()
           .items(
             Joi.object({
-              texto: Joi.string().min(3).required().messages(preguntasValidator.texto),
-              tipo: Joi.string().valid("abierta", "opcion").required().messages(preguntasValidator.tipo),
+              pregunta: Joi.string().min(3).required().messages(preguntasValidator.texto),
+              tipo_respuesta: Joi.string().valid("opcion").required().messages(preguntasValidator.tipo),
             })
           )
           .min(1)

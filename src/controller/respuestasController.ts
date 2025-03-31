@@ -62,6 +62,7 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
             nombre: fila.trabajador_nombre,
             puesto: fila.puesto,
             departamento: fila.departamento,
+            organizacion: fila.organizacion,
             cuestionarios: [],
           });
         }
@@ -81,6 +82,7 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
         nombre: trabajador.nombre,
         puesto: trabajador.puesto,
         departamento: trabajador.departamento,
+        organizacion: trabajador.organizacion,
         respondido: trabajador.cuestionarios.length > 0,
         respuestas: trabajador.cuestionarios,
       }));

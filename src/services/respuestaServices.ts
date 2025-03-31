@@ -41,6 +41,7 @@ export const obtenerUsuariosRespuesta = async () => {
         t.nombre AS trabajador_nombre,
         t.puesto,
         t.departamento,
+        t.organizacion,
         c.id AS cuestionario_id,
         c.nombre AS nombre_cuestionario,
         p.id AS pregunta_id,

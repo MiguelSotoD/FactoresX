@@ -3,7 +3,7 @@ import api from "../api";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-function ResultadoPage() {
+function RespuestasPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState([]);
@@ -13,8 +13,6 @@ function ResultadoPage() {
             try {
                 const response = await api.get("/api/respuestas/obtenerRespuestas");
                 console.log("Datos obtenidos:", response.data);
-
-                // Agrupar por trabajador y obtener solo los datos generales
                 const trabajadoresUnicos = response.data.data.map((trabajador) => ({
                     id: trabajador.trabajador_id,
                     nombre: trabajador.nombre,
@@ -67,7 +65,7 @@ function ResultadoPage() {
                                         <td className="p-3">{trabajador.fecha_respuesta}</td>
                                         <td className="p-3">
                                             <a 
-                                                href={`/resultados/${trabajador.id}/pdf`} 
+                                                href={`api/resultados/${trabajador.id}/pdf`} 
                                                 target="_blank"
                                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             >
@@ -98,4 +96,4 @@ function ResultadoPage() {
     );
 }
 
-export default ResultadoPage;
+export default RespuestasPage;

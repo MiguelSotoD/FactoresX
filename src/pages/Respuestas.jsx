@@ -22,7 +22,7 @@ function RespuestasPage() {
                     nombre: trabajador.nombre,
                     puesto: trabajador.puesto,
                     departamento: trabajador.departamento,
-                    organizacion: trabajador.organizacion,  // Nueva clave
+                    organizacion: trabajador.organizacion,  
                     fecha_respuesta: trabajador.respuestas.length > 0
                         ? new Date(trabajador.respuestas[0].fecha_respuesta).toLocaleDateString()
                         : "No disponible",
@@ -66,7 +66,6 @@ function RespuestasPage() {
 
             {!loading && !error && (
                 <div className="mx-6">
-                    {/* Filtro de organización */}
                     <div className="mb-4">
                         <label className="block text-gray-700 font-semibold mb-2">Filtrar por organización:</label>
                         <select

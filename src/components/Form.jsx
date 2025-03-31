@@ -49,6 +49,23 @@ export default function CuestionarioNom035() {
                                     required
                                 />
                             )}
+                            {pregunta.tipo === "opcion" && (
+                                <div className="flex gap-4 mt-2">
+                                    {pregunta.opciones.map((opcion, idx) => (
+                                        <label key={idx} className="flex items-center gap-2">
+                                            <input
+                                                type="radio"
+                                                name={`pregunta-${pregunta.id}`}
+                                                value={opcion}
+                                                onChange={() => manejarCambio(pregunta.id, opcion)}
+                                                className="focus:ring-blue-400"
+                                                required
+                                            />
+                                            {opcion}
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     ))}
                     <button

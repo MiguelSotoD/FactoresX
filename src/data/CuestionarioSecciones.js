@@ -2,10 +2,11 @@ const secciones = [
     {
         titulo: "Datos Generales",
         preguntas: [
-            { id: "nombre", texto: "Nombre del empleado (opcional):", tipo: "texto" },
+            { id: "nombre", texto: "Nombre del empleado:", tipo: "texto" },
             { id: "puesto", texto: "Puesto:", tipo: "texto" },
             { id: "organizacion", texto: "Organización:", tipo: "texto" },
             { id: "departamento", texto: "Departamento/Área:", tipo: "texto" },
+            {id: "sexo", texto: "Sexo:", tipo: "opcion", opciones: ["Masculino", "Femenino"]},
             { id: "fecha", texto: "Fecha:", tipo: "fecha" },
         ]
     },

@@ -16,7 +16,7 @@ const Login = () => {
     if (res.success) {
       console.log("Inicio de sesión exitoso", res);
       //Aqui va la ruta
-      navigate("/");
+      navigate("/RespuestasPage");
     } else {
       setError(res.message || "Error en el inicio de sesión");
     }

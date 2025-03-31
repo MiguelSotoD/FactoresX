@@ -18,7 +18,7 @@ function RespuestasPage() {
                     nombre: trabajador.nombre,
                     puesto: trabajador.puesto,
                     departamento: trabajador.departamento,
-                    fecha_respuesta: trabajador.respuestas.length > 0 
+                    fecha_respuesta: trabajador.respuestas.length > 0
                         ? new Date(trabajador.respuestas[0].fecha_respuesta).toLocaleDateString()
                         : "No disponible",
                 }));
@@ -64,8 +64,8 @@ function RespuestasPage() {
                                         <td className="p-3">{trabajador.departamento}</td>
                                         <td className="p-3">{trabajador.fecha_respuesta}</td>
                                         <td className="p-3">
-                                            <a 
-                                                href={`api/resultados/${trabajador.id}/pdf`} 
+                                            <a
+                                                href={`http://localhost:4000/api/resultados/${trabajador.id}/pdf`}
                                                 target="_blank"
                                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             >

@@ -21,3 +21,11 @@
 {"level":"info","message":"Conexión a PostgreSQL exitosa","timestamp":"2025-03-30 08:52:26"}
 {"level":"info","message":"Servidor listo en el puerto: 4000","timestamp":"2025-03-30 08:52:26"}
 {"level":"info","message":"Documentacion de Apis con Swagger en http://localhost:4000/api-docs","timestamp":"2025-03-30 08:52:26"}
+{"level":"info","message":"Conexión a PostgreSQL exitosa","timestamp":"2025-03-30 18:31:40"}
+{"level":"info","message":"Servidor listo en el puerto: 4000","timestamp":"2025-03-30 18:31:40"}
+{"level":"info","message":"Documentacion de Apis con Swagger en http://localhost:4000/api-docs","timestamp":"2025-03-30 18:31:40"}
+{"level":"info","message":"Conexión a PostgreSQL exitosa","timestamp":"2025-03-30 18:56:59"}
+{"level":"info","message":"Servidor listo en el puerto: 4000","timestamp":"2025-03-30 18:56:59"}
+{"level":"info","message":"Documentacion de Apis con Swagger en http://localhost:4000/api-docs","timestamp":"2025-03-30 18:56:59"}
+{"level":"info","message":"Se guardaron 16 respuestas del usuario 17","timestamp":"2025-03-30 19:04:24"}
+{"level":"info","message":"Resultado psicosocial guardado para trabajador 17","timestamp":"2025-03-30 19:04:24"}

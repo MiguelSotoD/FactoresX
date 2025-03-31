@@ -80,7 +80,6 @@ function RespuestasPage() {
                         </select>
                     </div>
 
-                    {/* Tabla de resultados */}
                     <div className="overflow-x-auto">
                         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead className="bg-gray-800 text-white">

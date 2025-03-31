@@ -30,7 +30,7 @@ export const guardarRespuestas = async (req: Request, res: Response): Promise<vo
 
       await analizarResultadosPorTrabajador(trabajador_idNumber); //Generar analisis de las respuestas
 
-      const urlPDF = `${req.protocol}://${req.get("host")}/resultado/${trabajador_idNumber}/pdf`;
+      const urlPDF = `${req.protocol}://${req.get("host")}/api/resultado/${trabajador_idNumber}/pdf`;
 
       res.status(201).json({
         message: "Respuestas guardadas correctamente",

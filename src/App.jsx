@@ -6,6 +6,7 @@ import CuestionarioPages from './pages/Cuestionario'
 import Footer from './components/Footer'
 import ResultadoPages from './pages/Resultado'
 import Login from './pages/Login'
+import RespuestasPage from './pages/Respuestas'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/Cuestionario" element={<CuestionarioPages />} />
         <Route path="/Resultado" element={<ResultadoPages />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/RespuestasPage" element={<RespuestasPage />} />
       </Routes>
     </Router>
   )

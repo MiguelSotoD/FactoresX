@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper } from "@mui/material";
-import { Box, Typography } from "@mui/material";
-import { SentimentDissatisfied as NoDataIcon } from "@mui/icons-material";
 
 function ResultadoPage() {
     const [loading, setLoading] = useState(true);
@@ -16,7 +13,7 @@ function ResultadoPage() {
             try {
                 const response = await api.get("/api/respuestas/obtenerRespuestas");
                 console.log("Datos del endpoint:", response.data);
-                setData(response.data.data); 
+                setData(response.data.data);
             } catch (err) {
                 console.error("Error al obtener respuestas:", err);
                 setError("Error al cargar los datos del cuestionario.");
@@ -30,54 +27,58 @@ function ResultadoPage() {
     return (
         <>
             <Header />
-            <h1 className="text-4xl font-extrabold text-black-400 text-center">título no se</h1>
-            <h2 className="text-1xl font-extrabold text-gray-400 text-center">aquí podrás visualizar las respuestas?</h2>
-            {loading && <p className="text-center">Cargando...</p>}
-            {error && <p className="text-center text-red-500">{error}</p>}
+            <h1 className="text-4xl font-extrabold text-gray-800 text-center mt-6">Resultados del Cuestionario</h1>
+            <h2 className="text-lg font-semibold text-gray-500 text-center mb-4">Aquí podrás visualizar las respuestas</h2>
+
+            {loading && <p className="text-center text-blue-500 font-semibold">Cargando...</p>}
+            {error && <p className="text-center text-red-500 font-semibold">{error}</p>}
 
             {!loading && !error && (
-                <TableContainer component={Paper} style={{ margin: "20px", padding: "10px" }}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell><strong>Nombre</strong></TableCell>
-                                <TableCell><strong>Puesto</strong></TableCell>
-                                <TableCell><strong>Departamento</strong></TableCell>
-                                <TableCell><strong>Cuestionario</strong></TableCell>
-                                <TableCell><strong>Pregunta</strong></TableCell>
-                                <TableCell><strong>Respuesta</strong></TableCell>
-                                <TableCell><strong>Fecha</strong></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
+                <div className="overflow-x-auto mx-6">
+                    <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                        <thead className="bg-gray-800 text-white">
+                            <tr>
+                                <th className="p-3 text-left">Nombre</th>
+                                <th className="p-3 text-left">Puesto</th>
+                                <th className="p-3 text-left">Departamento</th>
+                                <th className="p-3 text-left">Cuestionario</th>
+                                <th className="p-3 text-left">Pregunta</th>
+                                <th className="p-3 text-left">Respuesta</th>
+                                <th className="p-3 text-left">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {data.length > 0 ? (
-                                data.map((trabajador) => (
+                                data.map((trabajador) =>
                                     trabajador.respuestas.map((respuesta, index) => (
-                                        <TableRow key={`${trabajador.trabajador_id}-${index}`}>
-                                            <TableCell>{trabajador.nombre}</TableCell>
-                                            <TableCell>{trabajador.puesto}</TableCell>
-                                            <TableCell>{trabajador.departamento}</TableCell>
-                                            <TableCell>{respuesta.nombre_cuestionario}</TableCell>
-                                            <TableCell>{respuesta.texto_pregunta}</TableCell>
-                                            <TableCell>{respuesta.respuesta}</TableCell>
-                                            <TableCell>{new Date(respuesta.fecha_respuesta).toLocaleDateString()}</TableCell>
-                                        </TableRow>
+                                        <tr key={`${trabajador.trabajador_id}-${index}`} className="border-b hover:bg-gray-100">
+                                            <td className="p-3">{trabajador.nombre}</td>
+                                            <td className="p-3">{trabajador.puesto}</td>
+                                            <td className="p-3">{trabajador.departamento}</td>
+                                            <td className="p-3">{respuesta.nombre_cuestionario}</td>
+                                            <td className="p-3">{respuesta.texto_pregunta}</td>
+                                            <td className="p-3">{respuesta.respuesta}</td>
+                                            <td className="p-3">{new Date(respuesta.fecha_respuesta).toLocaleDateString()}</td>
+                                        </tr>
                                     ))
-                                ))
+                                )
                             ) : (
-                                <TableRow>
-                                    <TableCell colSpan={7} align="center">
-                                        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3}>
-                                            <NoDataIcon style={{ fontSize: 60, color: "#888" }} />
-                                            <Typography variant="h6" color="textSecondary">Sin respuestas</Typography>
-                                        </Box>
-                                    </TableCell>
-                                </TableRow>
+                                <tr>
+                                    <td colSpan={7} className="text-center p-5">
+                                        <div className="flex flex-col items-center">
+                                            <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a4 4 0 018 0v2M9 17a4 4 0 008 0M9 17v-2a4 4 0 018 0v2M9 10h.01M15 10h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01M12 14h.01" />
+                                            </svg>
+                                            <p className="text-gray-600 font-semibold mt-2">Sin respuestas disponibles</p>
+                                        </div>
+                                    </td>
+                                </tr>
                             )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                        </tbody>
+                    </table>
+                </div>
             )}
+
             <Footer />
         </>
     );

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import secciones from "../data/CuestionarioSecciones";
+import { useState, useEffect } from "react";
+import api from "../api"; 
 
 export default function CuestionarioNom035() {
     const [respuestas, setRespuestas] = useState({});
@@ -29,62 +29,103 @@ export default function CuestionarioNom035() {
             </h2>
             {pagina === 1 && (
                 <form onSubmit={manejarEnvioDatosGenerales}>
-                    {secciones[0].preguntas.map((pregunta) => (
-                        <div key={pregunta.id} className="mb-6">
-                            <p className="font-medium text-gray-800">{pregunta.texto}</p>
-                            {pregunta.tipo === "texto" && (
-                                <input
-                                    type="text"
-                                    className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    onChange={(e) => manejarCambio(pregunta.id, e.target.value)}
-                                    placeholder="Escribe tu respuesta aquí..."
-                                    required
-                                />
-                            )}
-                            {pregunta.tipo === "fecha" && (
-                                <input
-                                    type="date"
-                                    className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    onChange={(e) => manejarCambio(pregunta.id, e.target.value)}
-                                    required
-                                />
-                            )}
-                        </div>
-                    ))}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-400 text-white py-3 rounded-lg hover:bg-blue-500 transition duration-200 cursor-pointer"
-                    >
-                        Continuar al Cuestionario
-                    </button>
-                    {secciones[0].preguntas.map((pregunta) => (
-                        <div key={pregunta.id} className="mb-6">
-                            <p className="font-medium text-gray-800">{pregunta.texto}</p>
-                            {pregunta.tipo === "texto" && (
-                                <input
-                                    type="text"
-                                    className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    onChange={(e) => manejarCambio(pregunta.id, e.target.value)}
-                                    placeholder="Escribe tu respuesta aquí..."
-                                    required
-                                />
-                            )}
-                            {pregunta.tipo === "fecha" && (
-                                <input
-                                    type="date"
-                                    className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    onChange={(e) => manejarCambio(pregunta.id, e.target.value)}
-                                    required
-                                />
-                            )}
-                        </div>
-                    ))}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-400 text-white py-3 rounded-lg hover:bg-blue-500 transition duration-200 cursor-pointer"
-                    >
-                        Continuar al Cuestionario
-                    </button>
+                  {/* Campos para Datos Generales */}
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">
+                      Nombre del empleado (opcional):
+                    </label>
+                    <input
+                      type="text"
+                      name="nombre"
+                      value={datosGenerales.nombre}
+                      onChange={handleDatosGeneralesChange}
+                      className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">Puesto:</label>
+                    <input
+                      type="text"
+                      name="puesto"
+                      value={datosGenerales.puesto}
+                      onChange={handleDatosGeneralesChange}
+                      className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">
+                      Departamento/Área:
+                    </label>
+                    <input
+                      type="text"
+                      name="departamento"
+                      value={datosGenerales.departamento}
+                      onChange={handleDatosGeneralesChange}
+                      className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">
+                      Fecha de ingreso:
+                    </label>
+                    <input
+                      type="date"
+                      name="fecha_ingreso"
+                      value={datosGenerales.fecha_ingreso}
+                      onChange={handleDatosGeneralesChange}
+                      className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">Sexo:</label>
+                    <div className="flex gap-4 mt-2">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="sexo"
+                          value="masculino"
+                          checked={datosGenerales.sexo === "masculino"}
+                          onChange={handleDatosGeneralesChange}
+                          required
+                        />
+                        Masculino
+                      </label>
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="sexo"
+                          value="femenino"
+                          checked={datosGenerales.sexo === "femenino"}
+                          onChange={handleDatosGeneralesChange}
+                          required
+                        />
+                        Femenino
+                      </label>
+                    </div>
+                  </div>
+                  <div className="mb-6">
+                    <label className="font-medium text-gray-800">
+                      Organización:
+                    </label>
+                    <input
+                      type="text"
+                      name="organizacion"
+                      value={datosGenerales.organizacion}
+                      onChange={handleDatosGeneralesChange}
+                      className="w-full mt-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-400 text-white py-3 rounded-lg hover:bg-blue-500 transition duration-200 cursor-pointer"
+                  >
+                    Continuar al Cuestionario
+                  </button>
                 </form>
             )}
             {pagina === 2 && (

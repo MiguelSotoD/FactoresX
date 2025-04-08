@@ -3,7 +3,7 @@ import { conexionDBPostgreSQL } from "../config/configDB";
 import { Response } from "express";
 
 export const generarPDFResultado = async (trabajador_id: number, res: Response) => {
-  const doc = new PDFDocument();
+  const doc = new PDFDocument({ margin: 50 });
 
   // Obtener información del trabajador y su resultado
   const resultado = await conexionDBPostgreSQL.query(`
@@ -21,7 +21,7 @@ export const generarPDFResultado = async (trabajador_id: number, res: Response) 
   }
 
   const data = resultado.rows[0];
-  const factores = data.resultados_por_factor;
+  const resultados = data.resultados_por_factor;
 
   // Configurar headers del PDF
   res.setHeader("Content-Type", "application/pdf");
@@ -30,29 +30,107 @@ export const generarPDFResultado = async (trabajador_id: number, res: Response) 
   doc.pipe(res);
 
   // Título
-  doc.fontSize(18).text("Reporte de Evaluación Psicosocial", { align: "center" }).moveDown();
+  doc
+    .fillColor("#1a237e")
+    .fontSize(20)
+    .text("Reporte de Evaluación Psicosocial", { align: "center" })
+    .moveDown(1.2);
 
   // Datos del trabajador
-  doc.fontSize(12).text(`Nombre: ${data.nombre}`);
-  doc.text(`Puesto: ${data.puesto}`);
-  doc.text(`Departamento: ${data.departamento}`);
-  doc.text(`Organización: ${data.organizacion}`);
-  doc.text(`Fecha de evaluación: ${new Date(data.fecha_registro).toLocaleDateString()}`);
-  doc.moveDown();
+  doc
+    .fontSize(12)
+    .fillColor("#000")
+    .text(`Nombre:`, 50, doc.y, { continued: true })
+    .font("Helvetica-Bold").text(` ${data.nombre}`)
+    .font("Helvetica").text(`Puesto:`, 50, doc.y, { continued: true })
+    .font("Helvetica-Bold").text(` ${data.puesto}`)
+    .font("Helvetica").text(`Departamento:`, 50, doc.y, { continued: true })
+    .font("Helvetica-Bold").text(` ${data.departamento}`)
+    .font("Helvetica").text(`Organización:`, 50, doc.y, { continued: true })
+    .font("Helvetica-Bold").text(` ${data.organizacion}`)
+    .font("Helvetica").text(`Fecha de evaluación:`, 50, doc.y, { continued: true })
+    .font("Helvetica-Bold").text(` ${new Date(data.fecha_registro).toLocaleDateString()}`)
+    .moveDown(1.5);
 
   // Riesgo Global
-  doc.fontSize(14).text(`Riesgo Psicosocial Global: ${data.riesgo_psicosocial.toUpperCase()}`, { underline: true });
-  doc.moveDown().fontSize(12).text(`Recomendaciones: ${data.recomendaciones}`);
-  doc.moveDown();
+  const colorRiesgo = data.riesgo_psicosocial === "alto" ? "#b71c1c"
+                    : data.riesgo_psicosocial === "medio" ? "#f57f17"
+                    : "#2e7d32";
 
-  // Resultados por sección
-  doc.fontSize(14).text("Resultados por Sección", { underline: true }).moveDown();
+  doc
+    .fontSize(14)
+    .fillColor("#000")
+    .text("Resultado General", { underline: true })
+    .moveDown(0.5)
+    .fontSize(12)
+    .fillColor(colorRiesgo)
+    .font("Helvetica-Bold")
+    .text(`Riesgo Psicosocial Global: ${data.riesgo_psicosocial.toUpperCase()}`)
+    .moveDown(0.5)
+    .fillColor("#000")
+    .font("Helvetica")
+    .text(`Recomendaciones:`)
+    .font("Helvetica-Oblique")
+    .text(`${data.recomendaciones}`)
+    .moveDown(1.5);
 
-  const resultados = data.resultados_por_factor;
+  // Resultados por Sección
+  doc
+    .fontSize(14)
+    .font("Helvetica-Bold")
+    .fillColor("#000")
+    .text("Resultados por Sección", { underline: true })
+    .moveDown(0.8);
+
+  // Tabla de resultados
+  const x1 = 50;
+  const x2 = 250;
+  const x3 = 400;
+  const tableTop = doc.y;
+
+  // Encabezados
+  doc
+    .font("Helvetica-Bold")
+    .fontSize(11)
+    .text("Sección", x1, tableTop)
+    .text("Promedio", x2, tableTop)
+    .text("Nivel de Riesgo", x3, tableTop);
+
+  doc
+    .moveTo(x1, tableTop + 15)
+    .lineTo(550, tableTop + 15)
+    .strokeColor("#999")
+    .stroke();
+
+  let rowY = tableTop + 25;
+  doc.font("Helvetica").fontSize(11);
+
   for (const factor in resultados) {
     const f = resultados[factor];
-    doc.text(`${factor.charAt(0).toUpperCase() + factor.slice(1)} → Promedio: ${f.promedio} | Riesgo: ${f.riesgo}`);
+    const nombre = factor.charAt(0).toUpperCase() + factor.slice(1).replace(/_/g, " ");
+    const riesgoColor = f.riesgo === "alto" ? "#b71c1c"
+                      : f.riesgo === "medio" ? "#f57f17"
+                      : "#2e7d32";
+
+    doc
+      .fillColor("#000")
+      .text(nombre, x1, rowY)
+      .text(f.promedio.toFixed(2), x2, rowY)
+      .fillColor(riesgoColor)
+      .text(f.riesgo.toUpperCase(), x3, rowY);
+
+    rowY += 20;
   }
+
+  // Footer
+  doc
+    .moveDown(2)
+    .fontSize(10)
+    .fillColor("#999")
+    .font("Helvetica-Oblique")
+    .text("Este informe ha sido generado automáticamente por el sistema de evaluación psicosocial.", {
+      align: "center"
+    });
 
   doc.end();
 };

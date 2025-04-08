@@ -1,21 +1,25 @@
-import { login } from "../api/Login";
+import { login as loginApi } from "../api/Login";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validarLogin = async (e) => {
     e.preventDefault();
 
-    const res = await login({ email, password });
+    const res = await loginApi({ email, password });
 
     if (res.success) {
       console.log("Inicio de sesión exitoso", res);
-      //Aqui va la ruta
+
+      login(res.token);
+
       navigate("/RespuestasPage");
     } else {
       setError(res.message || "Error en el inicio de sesión");
@@ -59,13 +63,16 @@ const Login = () => {
               className="p-2 border border-gray-300 rounded-lg w-full "
             />
           </div>
+          {error && (
+            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+          )}
           <div className="flex justify-center">
             <button
               type="submit"
               onClick={validarLogin}
               className="bg-gray-400 text-white p-1.5 rounded-lg w-1/2 hover:bg-blue-500 transition duration-300 cursor-pointer"
             >
-              Iniciar sesion
+              Iniciar sesión
             </button>
           </div>
         </form>

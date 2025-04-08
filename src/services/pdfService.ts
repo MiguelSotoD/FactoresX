@@ -105,8 +105,20 @@ export const generarPDFResultado = async (trabajador_id: number, res: Response) 
   let rowY = tableTop + 25;
   doc.font("Helvetica").fontSize(11);
 
-  for (const factor in resultados) {
-    const f = resultados[factor];
+  const ordenFactores = [
+    "control",
+    "jornada",
+    "relaciones",
+    "violencia",
+    "reconocimiento",
+    "balance",
+    "estres",
+    "evaluacion"
+  ];
+
+ for (const factor of ordenFactores) {
+  const f = resultados[factor];
+  if (!f) continue;
     const nombre = factor.charAt(0).toUpperCase() + factor.slice(1).replace(/_/g, " ");
     const riesgoColor = f.riesgo === "alto" ? "#b71c1c"
                       : f.riesgo === "medio" ? "#f57f17"

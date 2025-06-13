@@ -1,13 +1,17 @@
 {
   "name": "factoresx",
   "private": true,
+  "homepage": "https://github.com/MiguelSotoD/FactoresX.git",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start"
   },
   "dependencies": {
     "@mui/icons-material": "^7.0.1",
@@ -21,6 +25,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "gh-pages": "^6.3.0",
+    "gulp": "4.0.2",
+    "gulp-append-prepend":"1.0.9",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
